@@ -1,8 +1,8 @@
 name: Rebase Upstream
 on:
   schedule:
-  - cron: "0 12 * * 6"  # run once a week, 12:00 every Saturday
-  workflow_dispatch:   # run manually
+  - cron: "0 12 * * 6"   # run once a week, 12:00 every Saturday
+  workflow_dispatch:      # run manually
 
 jobs:
   # just sync to upstream in master branch
@@ -18,7 +18,7 @@ jobs:
       uses: imba-tjd/rebase-upstream-action@master
       with:
         upstream: ACL4SSR/ACL4SSR   # the upstream repo
-        branch:   master            # the upstream branch that is rebased on
+        branch: master              # the upstream branch that is rebased on
         depth: 0                    # greater than the number of commits the upstream made in a period
 
   # sync to upstream with custom modification in custom branch
@@ -34,5 +34,5 @@ jobs:
       uses: imba-tjd/rebase-upstream-action@master
       with:
         upstream: ACL4SSR/ACL4SSR   # the upstream repo
-        branch:   master            # the upstream branch that is rebased on
+        branch: master              # the upstream branch that is rebased on
         depth: 0                    # greater than the number of commits the upstream made in a period
