@@ -1,38 +1,38 @@
-name: Scheduled Merge Remote Action
-on: 
+name: Rebase Upstream
+on:
   schedule:
-    - cron: '0 0 * * 1'
-    # scheduled for 00:00 every Monday
+  - cron: "0 12 * * 6"  # run once a week, 12:00 every Saturday
+  workflow_dispatch:   # run manually
 
 jobs:
-  merge-upstream:
+  # just sync to upstream in master branch
+  sync-master:
     runs-on: ubuntu-latest
-    steps: 
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          ref: master       # set the branch to merge to
-          fetch-depth: 0 
-      - name: Merge Upstream
-        uses: exions/merge-upstream@v1
-        with:
-          upstream: ACL4SSR/ACL4SSR              # set the upstream repo
-          upstream-branch: master   # set the upstream branch to merge from
-          branch: master            # set the branch to merge to
+    steps:
+    - name: Checkout
+      uses: actions/checkout@master
+      with:
+        ref: master     # the branch to do rebase
+        fetch-depth: 0  # greater than the number of commits you made
+    - name: Rebase Upstream
+      uses: imba-tjd/rebase-upstream-action@master
+      with:
+        upstream: ACL4SSR/ACL4SSR   # the upstream repo
+        branch:   master            # the upstream branch that is rebased on
+        depth: 0                    # greater than the number of commits the upstream made in a period
 
-  # set up another job to merge another branch
-  merge-upstream-another-branch:
+  # sync to upstream with custom modification in custom branch
+  rebase-custom:
     runs-on: ubuntu-latest
-    steps: 
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          ref: custom             # set the branch to merge to
-          fetch-depth: 0 
-      - name: Merge Upstream
-        uses: exions/merge-upstream@v1
-        with:
-          upstream: ACL4SSR/ACL4SSR      # set the upstream repo
-          upstream-branch: master   # set the upstream branch to merge from
-          branch: custom          # set the branch to merge to
-
+    steps:
+    - name: Checkout
+      uses: actions/checkout@master
+      with:
+        ref: custom     # the branch to do rebase
+        fetch-depth: 0  # greater than the number of commits you made
+    - name: Rebase Upstream
+      uses: imba-tjd/rebase-upstream-action@master
+      with:
+        upstream: ACL4SSR/ACL4SSR   # the upstream repo
+        branch:   master            # the upstream branch that is rebased on
+        depth: 0                    # greater than the number of commits the upstream made in a period
