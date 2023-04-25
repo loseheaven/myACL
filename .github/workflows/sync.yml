@@ -1,8 +1,8 @@
 name: Rebase Upstream
 on:
   schedule:
-  - cron: "0 12 * * 6"   # run once a week, 12:00 every Saturday
-  workflow_dispatch:      # run manually
+  - cron: "0 12 * * 6"  # run once a week, 12:00 every Saturday
+  workflow_dispatch:    # run manually
 
 jobs:
   # just sync to upstream in master branch
